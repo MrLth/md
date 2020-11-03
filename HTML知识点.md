@@ -213,6 +213,12 @@ DTD是对HTML文档的声明，还会影响浏览器的渲染模式（工作模�
 - em , 语义化标签，内容强调
 - cite, 语义化标签，书名，电影名
 
+## 4.4 autocomplete
+
+​	浏览器的自动填充
+
+​	autocomplete 适用于 **`<form>`**以及下面的 **`<input>`**类型：**`text、search、url、telephone、email、password、detepickers、range、color`**
+
 # 5. SEO优化
 
 1. 合理的 **`title`**、**`description`**、**`keywords`**， 搜索引擎对这三项的权重逐个减小
@@ -235,5 +241,43 @@ DTD是对HTML文档的声明，还会影响浏览器的渲染模式（工作模�
 3. 浏览器的前进后退按钮失效
 4. 不方便布局，移动端不方便显示
 
+# 7. 实现浏览器多个标签页之间的通信
 
+​	思路就是通过 **中介者模式** 实现，因为标签页之间无法直接通信
+
+## 7.1 webSocket
+
+​	两个标签页连接同一个服务器，以服务器作为中转。
+
+## 7.2 localStroage
+
+​	通过 **`storage`** 事件，以 **`localStorage`**作为中转
+
+## 7.3 处于同一个渲染进程
+
+​	要使两个标签页处于同一渲染进程，需要以下满足两个条件， 在新打开的标签页使用 window.opener 可以访问原标签页的 window，使用 window.open 返回的 newWindow 可以访问打开标签页的 window
+
+ 	1. 处于同一浏览上下文
+     - `const newWindow = window.open('url...')`
+     - `<a href='url...'>...</a>`
+ 	2. 满足同源策略
+
+> 注意！！！
+>
+> <a rel='noopener noreferrer'/>
+> 使用这种方式打开的新标签，就算原/新标签页是同一站点，也会分别使用不同的渲染进程
+>
+> noopener
+> 告诉浏览器，通过此A标签打开的新标签页中的opener设为null
+>
+> noreferrer
+> 告诉浏览器，新打开的标签页不要有引用关系
+
+​		
+
+
+
+
+
+​	
 
