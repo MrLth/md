@@ -95,9 +95,145 @@ DTD是对HTML文档的声明，还会影响浏览器的渲染模式（工作模�
 
 ​	Chrome 使用的内核，是苹果的开源浏览器核心Webkit的一个分支，目前由Google和Opera Software共同研发
 
-​	
+## 3.3 常见浏览器内核
+
+1. IE浏览器内核，Trident内核，俗称IE内核
+2. Chrome浏览器内核，统称为Chromium内核或者Chrome内核，以前是Webkit，现在是Blink
+3. FireFox浏览器内核，Gecko内核，俗称FireFox内核
+4. Safari浏览器内核，Webkit内核
+5. Opera浏览器内核，最初是自己的Presto内核，后来加入谷歌大军，从Webkit又到了Blink内核
+6. 360浏览器、猎豹浏览器、2345浏览器内核，IE+Chrome双内核
+7. 搜狗、遨游、QQ浏览器内核，Trident（兼容模式）+ Webkit（高速模式）
+8. 百度浏览器、世界之窗内核，IE内核
+9. UC浏览器内核，众口不一，UC说是自己研发的U3内核，但好像还是基于Webkit与Trident，还有说是基于火狐内核
+
+## 3.4 浏览器渲染流程
+
+1. 解析HTML文件，构建DOM Tree
+2. 解析CSS文件，构建CSSOM Tree
+3. 执行JavaScript 脚本
+4. 根据DOM Tree与CSSOM Tree，构建Render Tree 
+   1. 布局
+   2. 分层
+
+> Render Tree的节点被称为渲染对象，渲染对象是一个包含有颜色和大小的矩形，与DOM元素相对应，但不是所有DOM节点都会有对应的渲染对象，不可见的DOM元素不会加入到渲染树中
+
+5. 准备绘制列表
+6. 将绘制列表提交给合成线程进行合成，根据绘制列表生成相应图层的位置
+7. 光栅化
+8. 显示
+
+## 3.5 script标签的defer与async的区别
+
+![Bs3G9J.png](https://s1.ax1x.com/2020/11/03/Bs3G9J.png)
+
+**相同点：**
+
+1. 两者都是异步加载脚本，加载时不阻塞文档的解析
+2. 仅对外部脚本文件有效果，对于内嵌脚本无效
+
+**不同点：**
+
+1. **执行时机**
+
+   **async**
+
+   - 在 **load**下事件 之前执行
+   - 一旦加载完成，立即执行，执行时可能会阻塞文档的解析
+
+   - 标记为**async**的多个脚本并不保证按照指定他们的先后顺序执行
+
+   **defer**
+
+   - 在 **DOMContentLoaded**事件 之前执行
+   - 在文档解析完后再执行，提前加载完成需等待DOM Tree的构建
+   - 标记为**defer**的多个脚本按顺序执行
+
+> DOMContentLoaded 事件触发得越早，后续的操作就越快被执行，所以 async 相比 defer 会更快
+>
+> 异步加载样式文件，可以给<link>标签加上 media="print" 属性
+
+## 3.6 DOMContentLoaded 和 load 事件的区别
+
+**DOMContentLoaded ** 仅当DOM Tree准备就绪，不包含异步加载脚本、样式表和图片资源。
+
+**load** 页面上所有的DOM，图片，样式表，脚本都已准备就绪。
+
+## 3.7 文档的预解析
+
+​	Webkit与FireFox都做了这个优化，当执行JavaScript脚本时，另一个线程继续解析剩下的文档，并加载后面需要通过网络加载的资源。这种方式使得资源并行加载从而提升系统整体速度。
+
+​	**预解析只解析外部资源的引用，比如外部脚本、样式表以及图片，预解析不改变DOM树，它将这个工作留给主解析线程**
+
+# 4. HTML5
+
+​	HTML5 已不再是 SGML 的子集
+
+## 4.1 新增
+
+1. 绘画 **`canvas`**
+2. 多媒体 **`video`**、**`audio`**
+3. 本地存储 **`localStorage`**、**`sessionStorage`**
+4. 语义化标签 **`articl`**、**`footer`**、**`header`**、**`nav`**、**`section`**
+5. 表单控件 **`calendar`**、**`time`**、**`email`**、**`date`**、**`url`**、**`search`**
+6. 多线程 **`webWorker`**
+7. 通信 **`webSocket`**
+8. 新的文档属性 **`document.visiblityState`**
+9. 移除了一些元素
+   - 纯表现的元素 **`basefont`**、**`big`**、**`center`**、**`font`**、**`s`**、**`strike`**、**`tt`**、**`u`**
+   - 对可用性产生负面影响的元素 **`frame`**、**`frameset`**、**`noframes`**
+
+## 4.2 html5 兼容处理
+
+​	1. **IE8、IE7、IE6** 支持通过 **`document.createElement`** 创建标签，通过这一特性让浏览器支持 **`HTML5`** 标签，并加上标签默认的样式
+
+ 2. 使用成熟的框架，**`html5shim`** 
+
+    ```html
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecide.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    ```
+
+> `<!--[if lt IE 9]><![endif]>` 用于判断IE的版本，限定只有IE9以下的浏览器版本才执行
+
+## 4.3 HTML语义化的好处
+
+1. 用正确的标签做正确的事
+2. 让页面内容结构化，结构更清晰，便于开发者维护
+3. 拥有容易阅读的默认样式
+4. 部分标签对残障人士更友好，比如屏幕阅读器对 **`<strong>`**标签会加强语气，而 **`<b>`** 标签不会
+5. 利于SEO，搜索引擎的抓虫根据HTML标签来确定上下文和各个关键字的权重
+
+### 4.3.1 b 与 strong 的区别，i 与 em 、cite 的区别
+
+- b , 仅表示加粗
+- strong, 语义化标签，表示强调，屏幕阅读器会加重语气
+- i,  倾斜，独立于正文的内容，比如外来词，词语的定义
+- em , 语义化标签，内容强调
+- cite, 语义化标签，书名，电影名
+
+# 5. SEO优化
+
+1. 合理的 **`title`**、**`description`**、**`keywords`**， 搜索引擎对这三项的权重逐个减小
+   - title, 一般为网页标签加上站点名，如：`css-loader | webpack`，`seo优化 - google搜索`
+   - description, 把页面内容高度概括，长度合适，不同页面应有不同
+   - keywords, 列举出重要关键字，逗号分隔
+2. 语义化的 **`HTML`** 代码，符合 **`W3C`** 规范，让搜索引擎更容易理解网页
+3. 重要内容放在最前，部分搜索引擎对抓取有长度限制
+4. 重要内容不用JS输出，爬虫不会执行JS获取内容
+5. 少用 **`iframe`**，爬虫不会抓取 **`iframe`** 中的内容
+6. 非装饰性图片必须加上 `alt` 标签
+7. 提高网站速度，网站速度是搜索引擎排序的一个重要指标
+
+# 6. iframe 的缺点
+
+​	iframe 元素会创建包含另外一个文档的内联框架（即行内框架）
+
+1. iframe 会阻塞主页面的 **`onload`** 事件触发，window 的 onload 事件需要所有 iframe 加载完毕后都会触发
+2. 搜索引擎爬虫不会检索 iframe 页面的内容，不利于 SEO
+3. 浏览器的前进后退按钮失效
+4. 不方便布局，移动端不方便显示
 
 
-
-​	
 
