@@ -63,6 +63,116 @@ DTD是对HTML文档的声明，还会影响浏览器的渲染模式（工作模�
 - 兼容性，@import 是CSS2.1的语法，不支持IE5-， 而link是支持的
 - DOM的可控性，可能动态创建link改变样式，而@import不行
 
+## ２.5 常用的 meta 标签
+
+meta标签有下面的作用：
+
+1. 搜索引擎优化（SEO）
+2. 定义页面使用语言
+3. 自动刷新并指向新的页面
+4. 实现网页转换时的动态效果
+5. 控制页面缓冲
+6. 网页定级评价
+7. 控制网页显示的窗口
+
+```html
+<meta charset='utf-8'> <!--声明文档使用的字符编码-->
+<meta http-equiv='X-UA-Compatiale' content='IE-edge, chrome=1'> <!--优先使用 IE 最新版本和 Chrome-->
+<meta name=”description” content=”不超过 150 个字符”/> <!--页面描述-->
+<meta name=”keywords” content=””/> <!--页面关键词-->
+<meta name=”author” content=”name, email@gmail.com”/> <!--网页作者-->
+<meta name=”robots” content=”index,follow”/> <!--robots用来告诉搜索机器人哪些页面需要索引，哪些页面不需要索引-->
+<meta name=”viewport” content=”initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no”> <!--为移动设备添加 viewport-->
+<meta name=”apple-mobile-web-app-title” content=”标题”> <!--iOS 设备 begin-->
+<meta name=”apple-mobile-web-app-capable” content=”yes”/> <!--添加到主屏后的标题（iOS 6新增）-->
+<!--是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏-->
+<meta name=”apple-itunes-app” content=”app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL”>
+<!--添加智能 App 广告条 Smart App Banner（iOS 6+ Safari）-->
+<meta name=”apple-mobile-web-app-status-bar-style” content=”black”/>
+<meta name=”format-detection” content=”telphone=no, email=no”/> <!--设置苹果工具栏颜色-->
+<meta name=”renderer” content=”webkit”> <!--启用 360 浏览器的极速模式(webkit)-->
+<meta http-equiv=”X-UA-Compatible” content=”IE=edge”> <!--避免 IE 使用兼容模式-->
+<meta http-equiv=”Cache-Control” content=”no-siteapp” /> <!--不让百度转码-->
+<meta name=”HandheldFriendly” content=”true”> <!--针对手持设备优化，主要是针对一些老的不识别 viewport 的浏览器，比如黑莓-->
+<meta name=”MobileOptimized” content=”320″> <!--微软的老式浏览器-->
+<meta name=”screen-orientation” content=”portrait”> <!--uc 强制竖屏-->
+<meta name=”x5-orientation” content=”portrait”> <!--QQ 强制竖屏-->
+<meta name=”full-screen” content=”yes”> <!--UC 强制全屏-->
+<meta name=”x5-fullscreen” content=”true”> <!--QQ 强制全屏-->
+<meta name=”browsermode” content=”application”> <!--UC 应用模式-->
+<meta name=”x5-page-mode” content=”app”> <!--QQ 应用模式-->
+<meta name=”msapplication-tap-highlight” content=”no”> <!--windows phone 点击无高光-->
+<!--设置页面不缓存-->
+<meta http-equiv=”pragma” content=”no-cache”>
+<meta http-equiv=”cache-control” content=”no-cache”>
+<meta http-equiv=”expires” content=”0″>
+<!--自动刷新并指向新页面, 停留2秒钟后自动刷新到URL网址-->
+<meta http-equiv="Refresh" content="2;URL=http://www.jb51.net">
+<!--强制页面在当前窗口以独立页面显示, 用来防止别人在框架里调用自己的页面-->
+<meta http-equiv="Window-target" content="_blank">
+<!--显示语言的设定-->
+<meta http-equiv="Content-Language" content="zh-cn"/>
+<!--说明网站采用的什么软件制作-->
+<meta name="generator" content="信息参数"/>
+<!--网站版权信息-->
+<meta name="copyright" content="信息参数">
+<!--是否显示图片工具栏-->
+<meta http-equiv="imagetoolbar" content="false"/>
+```
+
+### ２.5.1 SEO优化
+
+```html
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+<!-- Start of Baidu Transcode -->
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta name="applicable-device" content="pc,mobile">
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+<meta name="mobile-agent" content="format=html5;url=https://www.jianshu.com/p/b1334dc59dfb">
+<!-- End of Baidu Transcode -->
+
+<meta name="description"  content="webpack配置文件，增加插件transform-es3-property-literals和transform-es3-member-expression-literal">
+
+<meta name="360-site-verification" content="604a14b53c6b871206001285921e81d8" />
+<!-- Apple -->
+<meta name="apple-mobile-web-app-title" content="简书">
+
+<!--  Meta for Smart App Banner -->
+<meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/10802047">
+<!-- End -->
+
+<!--  Meta for Twitter Card -->
+<meta content="summary" property="twitter:card">
+<meta content="@jianshucom" property="twitter:site">
+<meta content="Babel转ES5后IE8下的兼容性问题解决方案" property="twitter:title">
+<meta content="1、webpack配置文件，增加插件transform-es3-property-literals和transform-es3-member-expression-liter..." property="twitter:description">
+<!-- End -->
+<!--  Meta for Facebook Applinks -->
+<meta property="al:ios:url" content="jianshu://notes/10802047" />
+<meta property="al:ios:app_store_id" content="888237539" />
+<meta property="al:ios:app_name" content="简书" />
+
+<meta property="al:android:url" content="jianshu://notes/10802047" />
+<meta property="al:android:package" content="com.jianshu.haruki" />
+<meta property="al:android:app_name" content="简书" />
+<!-- End -->
+```
+
+[参考博客](https://www.cnblogs.com/qiumohanyu/p/5431859.html)
+
+## 2.6 input 的 disabled 与 readonly的区别
+
+​	disabled 禁用此元素，input 内容不会随着表彰提交
+
+​	readonly 规定输入字段为只读，会随着表单提交
+
+​	！！！注意，无论是 readonly 还是 disabled，都可以使用 JS 更改它的内容
+
 # 3. 浏览器
 
 ## 3.1 浏览器内核的概念
@@ -213,11 +323,40 @@ DTD是对HTML文档的声明，还会影响浏览器的渲染模式（工作模�
 - em , 语义化标签，内容强调
 - cite, 语义化标签，书名，电影名
 
+### 4.3.2 title 和 h1 的区别
+
+​	**定义**
+
+​		title 是网站标题，一个页面只能有一个
+
+​		h1 是文章主题
+
+​	**作用**
+
+​		title 高度概括网页信息，告诉搜索引擎和用户这个页面是关于什么内容和主题的，直接是显示在浏览器标签栏上
+
+​		h1 突出文章主题，对页面信息的抓取也有很大的影响，h1是在没有外界干扰下除 title 以外第二个能强调页面主旨的标记
+
+> 如果 title 为空，浏览器会尝试以 h1 的内容作为标签页标题
+
 ## 4.4 autocomplete
 
 ​	浏览器的自动填充
 
 ​	autocomplete 适用于 **`<form>`**以及下面的 **`<input>`**类型：**`text、search、url、telephone、email、password、detepickers、range、color`**
+
+## 4.5 canvas 与 svg 的区别
+
+**canvas**
+
+1. 是一种通过 JavaScript 来绘制 2D 图形的方式
+2. 标量图， 逐像素渲染，缩放会失真
+
+**svg**
+
+1. 使用 xml 描述 2D 图形的语言
+2. 由于是基于 xml，所以 svg DOM 的每个元素都是可用的，可以为其添加事件监听函数
+3. 保存的是图形的绘制方法，缩放不会失真
 
 # 5. SEO优化
 
@@ -253,16 +392,28 @@ DTD是对HTML文档的声明，还会影响浏览器的渲染模式（工作模�
 
 ​	通过 **`storage`** 事件，以 **`localStorage`**作为中转
 
-## 7.3 处于同一个渲染进程
+## 7.3 同一浏览上下文组 ( browsing context group)
 
-​	要使两个标签页处于同一渲染进程，需要以下满足两个条件， 在新打开的标签页使用 window.opener 可以访问原标签页的 window，使用 window.open 返回的 newWindow 可以访问打开标签页的 window
+​	在当前标签页打开的标签页可以使用 window.opener 访问原标签页的 window，使用 window.open 返回的 newWindow 可以访问打开标签页的 window
 
- 	1. 处于同一浏览上下文
-     - `const newWindow = window.open('url...')`
-     - `<a href='url...'>...</a>`
- 	2. 满足同源策略
+- `const newWindow = window.open('url...')`
+- `<a href='url...'>...</a>`
 
-> 注意！！！
+```typescript
+// 处于同一浏览上下文的两个标签页可以通过 opener.postMessage 方法和 message 事件通信
+const referrer = window.open('url...')
+referrer.addEventListener("message", (e)=>console.log(e)) // 'hello'
+referrer.postMessage({a:1,b:[1,2,3]}, '*') 
+```
+
+```typescript
+window.addEventListener("message", (e)=>console.log(e)) // {a:1,b:[1,2,3]}
+opener.postMessage('hello', '*')
+```
+
+[postMessage. MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage)
+
+> 注意！！！只有同时属于浏览上下文和满足同源策略的两个标签页，才会被分配到同一渲染进程，才可以互相操作 DOM
 >
 > <a rel='noopener noreferrer'/>
 > 使用这种方式打开的新标签，就算原/新标签页是同一站点，也会分别使用不同的渲染进程
@@ -273,11 +424,189 @@ DTD是对HTML文档的声明，还会影响浏览器的渲染模式（工作模�
 > noreferrer
 > 告诉浏览器，新打开的标签页不要有引用关系
 
-​		
+## 7.4 sharedWorker
 
+​	Safari 和 IE 不支持
 
+```typescript
+// sharedWorker.js
+var clients = [];
+onconnect = function(e) {
+    var port = e.ports[0];
+    clients.push(port);
+    port.addEventListener('message', function(e) {
+        for (var i = 0; i < clients.length; i++) {
+            var eElement = clients[i];
+            eElement.postMessage(e.data)
+        }
+    });
+    port.start();
+}
+```
 
+```typescript
+// 需要接收信息的标签页
+myWorker = new SharedWorker("script/scenesetting/ShareWorker.js")
+myWorker.port.onmessage=function(e) {
+    var result=e.data;//此处就是共享现成推送过来的数据可以是字符串、数组、json
+    /***********上面拿到数据后，就可以在下面做一些你想造做的事************/
+};
+myWorker.port.postMessage(newData) // 推送消息
+```
 
+# 8. Page Visibility API
 
-​	
+## 8.1 以往的API
+
+​	以往监听用户离开页面的行为，通过以下三个事件实现
+
+​	**事件：** **`pagehide`** 、 **`beforeunload`**、**`unload`**
+
+​	**问题：** 这些事件在移动端支持度不高，因为手机系统可以将一个进程直接转入后台，然后为了节省资源就会杀死。
+
+## 8.2  使用场景 
+
+​	以前，开发者想要指定一种在任何情况下页面卸载都会执行的代码，是无法做到的。因为页面被系统切换以及系统清除浏览器进程是无法监听到的（主要在手机端）。而 Page Visiblity API 不管在手机还是PC端，都能监听到页面的可见性的变化。
+
+- 监听网页的可见性，预判网页的卸载
+- 页面不可见时暂停页面的行为，节省资源。比如对服务器的轮询、网页动画、正在播放的音频或视频
+
+## 8.3 API
+
+```typescript
+
+document.visibilityState: 'hidden' | 'visible' | 'prerender' 
+// 1. 只要页面可见，哪怕仅露出一个角，值都是 visible
+// 2. 以下情况会返回 hidden
+// 		a. 浏览器最小化
+//		b. 浏览器没有最小化，但是当前页面切换到了其它标签页
+//		c. 浏览器将要卸载页面（unload）
+// 		d. 操作系统将触发锁屏屏幕
+// 3. prerender 只在支持预渲染的浏览器出现
+// 注意！！！ 内嵌的 <iframe> 页面的 document.visibilityState 属性由顶层窗口决定
+
+document.hidden:boolean
+// 1. 出于历史原因保留，应尽量使用 document.visibility
+// 2. 仅在 document.visibility 为 visible 时返回 true，其余情况均返回 false
+
+// 事件
+document.addEventListener('visibilitychange', ()=>{})
+```
+
+## 8.4 页面卸载
+
+​	页面卸载分为有三种情况，前两种情况 **`pagehide`** 、 **`beforeunload`**、**`unload`** 都可以监听到，第三种只能 **`visibilitychange`** 才能监听到
+
+1. 页面可见时，用户关闭标签页或浏览器窗口
+2. 页面可见时，用户在当前窗口前往另一个页面
+3. 页面不可见时，用户或系统关闭浏览器进程
+
+> **`beforeunload`** 适合在用户修改了表单，没有提交就离开当前页面
+>
+> 注意！！！ 指定了 unload 和 beforeunload 事件的监听函数，浏览器不会缓存当前页面
+
+## 9. webSocket 兼容低版本浏览器
+
+1. Adobe Flash Socket
+2. ( IE ) ActiveX HTMLFile
+3. 基于 multipart 编码发送 XHR
+4. 基于长轮询的 XHR
+
+# 9. 渐进增强与优雅降级的定义
+
+**渐进增强**：针对低版本浏览器进行构建页面，保证最基本的功能，然后再针对高级浏览器 进行效果、交互等改进和追加功能达到更好的用户体验。 
+
+**优雅降级**：一开始就根据高版本浏览器构建完整的功能，然后再针对低版本浏览器进行兼容。
+
+# 10. Web 标准中，可用性、可访问性、可维护性的理解
+
+**可用性** Usability
+
+​	从用户的角度看待产品的质量，产品是否容易上手，用户是否能完成任务，完成效率以及使用过程的用户体验
+
+**可访问性** Accessibility
+
+​	Web 内容对于残障用户的可阅读和可理解性
+
+**可维护性** Maintainability
+
+	1. 当系统出问题时，快速定位并解决问题的成本，成本低则可维护性好
+ 	2. 代码是否容易被人理解，是否容易修改和增强功能
+
+# 11. 浏览器架构
+
+1. 浏览器基本服务
+   1. Profile 进程
+   2. UI 进程
+   3. GPU 进程
+   4. 网络进程
+   5. 文件进程
+   6. 设备进程
+   7. Audio 进程
+   8. Video 进程
+   9. ...
+2. 浏览器主进程
+3. 渲染进程 * n
+4. 插件进程 * n
+
+> 内存不足时，会将基本服务里面的进程作为服务合并到浏览器主进程中
+
+# 12. css reset 与 normalize.css 的区别
+
+​	两者都是为了使各个浏览器渲染页面效果一致
+
+**css reset**
+
+​	将所有浏览器标签的自带样式重置，这样更易于保持各浏览器渲染的一致性
+
+**normalize.css**
+
+​	尽量保留浏览器的默认样式，不进行太多的重置，尽力让这些样式保持一致并尽可能与现代标准相符合
+
+```scss
+// css reset 部分
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {  
+   margin: 0;  
+   padding: 0;  
+   border: 0;  
+   font-size: 100%;  
+   font: inherit;  
+   vertical-align: baseline; 
+}
+
+// normalize.css 部分
+/**
+ * 1. Addresses appearance set to searchfield in S5, Chrome
+ * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)
+ */
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Removes inner padding and search cancel button in S5, Chrome on OS X
+ */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+```
+
+# 13. 获取位置信息
+
+```typescript
+if ("geolocation" in navigator) {
+    var watchID = navigator.geolocation.watchPosition(function(position) {
+      console.log(position)
+    });
+    navigator.geolocation.getCurrentPosition(function(position) {
+      do_something(position.coords.latitude, position.coords.longitude);
+    });
+} else {
+  /* 地理位置服务不可用 */
+}
+```
 
