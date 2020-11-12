@@ -201,3 +201,40 @@ elem:empty
 ## 4. static
 
 ​	默认。没有定位，元素正常出现流中（忽略 `top、bottom、left、right、z-index` 的声明）
+
+# CSS 3 新增特性
+
+1. 新增各种CSS选择器
+2. 圆角 `border-radius`
+3. 多列布局 `column-count`
+4. 阴影 `box-shadow text-shadow`
+5. 反射 `box-reflect`
+6. 动画 `animate`
+7. 变换 `transform`
+8. 过渡 `transition`
+
+# flexbox 
+
+​	弹性盒布局模型，任何一个容器都可以指定为 flex 布局，行内元素也可以使用 flex 布局，设置为 flex 布局后，子元素的 float、clear 和 veritcal-algin 都将失效。
+
+## 1. 容器属性
+
+1. **`flex-direction`** 决定主轴的方向，常用属性 `column`
+2. **`justify-content`** 决定项目在主轴上的对齐方式，常用属性 `center`
+3. **`align-items`** 决定项目在交叉轴上的对齐方式，常用属性 `center`
+4. **`flex-wrap`** 决定项目在一条轴线上排不下时的换行方式，默认 `nowrap`
+5. **`flex-flow: <flex-direction> <flex-wrap>`**  简写方式
+6. **`align-count`** 定义多根轴线的对齐方式，只有一根轴线不起作用
+
+<img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071010.png" style="zoom: 51.5%;" /> <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071011.png" style="zoom: 50%;" /><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071012.png" style="zoom: 50%;" />
+
+> 左1 justify-content，左2 align-items，右1 align-content
+
+## 2. 项目属性
+
+1. **`order`** 定义项目的排列顺序，数值越小，排列越靠前，默认为 0 
+2. **`flex:<flex-grow> <flex-shrink> <flex-basic>`** 默认值 `0 1 auto`
+3. **`align-self`** 允许单个项目有与其他项目不一样的对齐方式
+
+<img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071016.png" style="zoom: 50%;" />
+
