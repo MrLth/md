@@ -202,6 +202,15 @@ elem:empty
 
 ​	默认。没有定位，元素正常出现流中（忽略 `top、bottom、left、right、z-index` 的声明）
 
+# display、postition、float 的相互关系
+
+1. disply:none 直接从文档流中删除元素，position 和 float 完全无效
+2. position 为 absolute 或者 fixed 的元素，float 属性失效，并且此时 display 的值为 table 或者 block
+3. position 为 relative 的元素，且 float 不为 none，元素相对于浮动后的位置定位
+4. position 为 static，float 为 none 的元素，display 才会使用设置时的值
+
+> 简单理解就是： position 绝对定位 > float > position 相对定位 > 默认
+
 # CSS 3 新增特性
 
 1. 新增各种CSS选择器
@@ -237,4 +246,57 @@ elem:empty
 3. **`align-self`** 允许单个项目有与其他项目不一样的对齐方式
 
 <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071016.png" style="zoom: 50%;" />
+
+# visibility: collapse 的作用
+
+1. 对于一般的元素，它的表现跟 visibility:hidden 一样，元素不可见，不可点击，但仍然占用页面空间
+2. 但对于 table 相关的元素，例如 table行、tablegroup、table列、tablecolumngroup，他的表现和 display:none 一样，也就是它们占用的空间也会释放
+
+## 1. 在不同浏览器的区别
+
+1. chrome 里面，使用 collapse 和使用 hidden 没有区别
+2. 在 FireFox、Opera 和 IE11 里，使用 collapse 的 table 的行会消息，它下面的一行会补充它的位置
+
+# width:100% 和 width:auto 的区别
+
+1. width:100% 会让元素的宽度等于包含容器的宽度，如果此时设置了 padding、border 或者 margin ，那么元素的整体宽度就会溢出了
+2. width:auto 会使元素撑满包含窗口的宽度，margin、border、padding、content 会自动进行分配
+
+# margin 重叠的问题
+
+​	块级元素的 margin-top 和另外一个元素的 margin-bottom 有时会合并，其大小为两者中最大值
+
+**合并条件**
+
+1. 两个元素处于常规文档流的块级盒子中，并且处于同一 BFC 中
+2. 没有线盒、没有空隙、没有 padding 和 border 将它们隔开 （指父子元素）
+
+**出现场景**
+
+1. 父元素的 margin-top 与其第一个子元素的 margin-top
+2. 元素的 margin-bottom 与其下一个兄弟元素的 margin-top
+3. height 为 auto 的父元素的 margin-bottom 与其最后一个子元素的 margin-bottom
+4. 高度和最小高度都为 0 的空元素的 margin-top 和 bottom
+
+**解决办法**
+
+ 1. 相邻兄弟节点
+
+    1. 新建一个 BFC，让两者不再处于同一 BFC 内
+
+	2. ### 父元素与 第一/最后一 个子元素
+
+    1. 父元素独立为一个新的 BFC
+    2. 设置 boder-top/bottom 或者 padding-top/bottom
+    3. 使用 行内元素 作为父元素的第一个子元素
+
+	3. 父元素与最后一个子元素
+
+    	1. 设置父元素的 height、min-height 或者 max-height
+
+	4. 空元素
+
+    	1. 设置 border-top/bottom 或者 padding-top/bottom
+    	2. 添加行内元素（空格无效）
+    	3. 设置 height 或者 min-height
 
