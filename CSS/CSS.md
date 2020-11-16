@@ -2,6 +2,41 @@
 
 
 
+
+
+# 1. 尺寸术语解释
+
+1. **设备像素**
+   设备的物理像素
+2. **CSS像素**
+   指逻辑像素，其值为 “设备像素 / **DPR**”，实际页面中显示的像素，基本上所有的 CSS 属性和 JavaScript 属性都是使用的 CSS像素，screen.width 和 screen.height 除外
+3. **DPR**（ Device Pxiel Ratio）
+   直译设备像素比，其值为 “设备像素/CSS像素”，常见的移动端高分屏一般为 2，由浏览器决定
+4. **PPI** ( Pxiels Per Inch )
+   每英寸像素数
+5. **DPI** ( Dots Per Inch )
+   每英寸点数，常用于打印设备（表墨点），在计算机上一般 1ppi 等于 1dpi
+
+# 2. 三种 viewport 
+
+1. **layoutviewport**
+   布局视口，如果把移动设备上浏览器的可视区域设为 viewport 的话，某些网页就会因为 viewport 太窄也显示错乱，所以移动端浏览器就默认把 viewport 设为一个较宽的值 ，如 980px
+   `document.documentElement.clientWidth`
+2. **visualviewport**
+   可视视口，指移动设备上我们可见的区域的 viewport 的大小，一般为屏幕分辨率的大小
+   `window.innerWidth`（在部分浏览器中无法正确获取）
+3. **idealviewport**
+   理想视口，由于布局视口一般比可视视口大，所以要看到整个页面需要缩放和滑动窗口才行。所以提出了理想视口，让用户不用缩放和滑动窗口就可以看到整个页面，并且页面在不同分辨率下显示的内容的大小相同
+   **实际上就 CSS像素，CSS像素和 DPR 就是 idealviewport 的具体实现**
+
+**使用 meta 标签对 viewport 进行控制**
+
+```html
+<meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0'>
+```
+
+> meta viewport 最先是在苹果的移动端 safrai 引入的，安卓端浏览器后续也相继引入，目的是解决移动设备的 viewport 的问题，事实证明这的确是有用的
+
 # CSS 选择器
 
 ## 1. 优先级
@@ -222,6 +257,16 @@ elem:empty
 7. 变换 `transform`
 8. 过渡 `transition`
 
+# CSS 3 all 属性
+
+​	all 表示所有属性（除开 unicode-bidi 和 derection），，目前有 3 个值：
+
+1. **initial** 忽略浏览器样式和用户样式，使用初始值
+2. **inherit** 强制使用父元素的所有样式
+3. **unset** 忽略浏览器样式和用户样式，可以继承的属性使用继承值，不可继承的属性使用初始值
+
+
+
 # flexbox 
 
 ​	弹性盒布局模型，任何一个容器都可以指定为 flex 布局，行内元素也可以使用 flex 布局，设置为 flex 布局后，子元素的 float、clear 和 veritcal-algin 都将失效。
@@ -300,3 +345,29 @@ elem:empty
     	2. 添加行内元素（空格无效）
     	3. 设置 height 或者 min-height
 
+# 浏览器解析 CSS 选择器
+
+​	样式系统从关键选择器，也就是最右边的选择器，然后依次左移匹配。这样做的好处就是减少节点的匹配，因为左边的选择器能匹配的节点总是比右边多的，从右边开始匹配能有效减少二次匹配的次数。
+
+# 字体大小尽量选用偶数
+
+1. 偶数字号更容易和其它元素构成比例关系，比如常用的 line-height 常用的就是 1.5 倍字号大小
+2. 低版本的 IE 浏览器会强制把字号渲染成偶数，比如 13px 会渲染为 14px
+3. 早期的 windows 系统是没有 13px 大小的宋体点阵
+
+# 修改 chrome 自动填充的输入框的样式
+
+```scss
+input:-webkit-autofill{
+	box-shadow:99999px solid #fff inset;
+    // background-color 和 color 是无法修改的，只能使用其它方法替代
+}
+```
+
+# font-soomthing
+
+​	 仅 Mac OS 下有效，并且需要加前缀（ **-webkit-** ），非标准属性，没有用的必要
+
+# font-style 的 italic 和 oblique 的区别
+
+​	**italic** 会优先使用当前字体的斜体版本，**oblique** 是通过计算让文字倾斜。**litalic** 如果没有当前字体的斜体版本会解析为 **oblique**
