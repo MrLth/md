@@ -371,3 +371,16 @@ input:-webkit-autofill{
 # font-style 的 italic 和 oblique 的区别
 
 ​	**italic** 会优先使用当前字体的斜体版本，**oblique** 是通过计算让文字倾斜。**litalic** 如果没有当前字体的斜体版本会解析为 **oblique**
+
+# transition 和 animation 的区别
+
+​	 可以皅 transition 当作 animation 的简化版，tansition 主要关注一个属性或者多个属性从一个值到别一个值的过渡，而 animation 关注的是一个元素的变化,   可以使用关键帧控制更小粒度的变化
+
+# height:100% 为什么会失效
+
+​	对于普通文档流中的元素, 如果包含块没有显式指定高度值, 它的 height 值始终为 auto, 也就是由它来撑起包含块的高度. 
+
+# min-width/max-width 与 min-height/max-height 之间的覆盖规则
+
+1. max-width/min-width 会覆盖 width，即使 width 是行内样式或者 !important
+2. min-width 会覆盖 max-width，此规则发生在两者冲突时
