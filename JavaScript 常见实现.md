@@ -232,6 +232,10 @@ const cloneDeep = (obj)=>{
         return obj.map(v=>cloneDeep(v))
     }
     
+    if (typeof obj === 'function'){
+        return Function('return '+obj.toString())()
+    }
+    
     if (type(obj) === 'date'){
         return new Date(obj.valueOf())
     }
@@ -245,6 +249,62 @@ const cloneDeep = (obj)=>{
     return obj
 }
 ```
+
+```typescript
+// 广度优先 && 多个属性使用同一对象保持不变
+const cloneDeep = (obj) => {
+    if (typeof obj === 'function') return Function('return ' + obj.toString())()
+    if (obj === null || typeof obj !== 'object') return obj
+    if (type(obj) === 'date') return new Date(+obj)
+
+    function reduceCb(newobj, [k, v]) {
+        const vtype = typeof v
+        if (v !== null && ['object', 'function'].includes(vtype)) {
+            const i = queue.findIndex(obj => obj[1] === v)
+            if (i !== -1) {
+                newobj[k] = queue[i][0]
+            } else {
+                if (type(v) === 'date') {
+                    newobj[k] = new Date(+v)
+                } else if (vtype === 'function') {
+                    const newFn = Function('return ' + v.toString())()
+                    newobj[k] = newFn
+                    queue.push([newFn, v])
+                } else {
+                    const newv = Array.isArray(v) ? [] : Object.create(Object.getPrototypeOf(v))
+                    newobj[k] = newv
+                    queue.push([newv, v])
+                }
+            }
+        } else {
+            // Primitive value
+            newobj[k] = v
+        }
+        return newobj
+    }
+
+    const rst = Array.isArray(obj) ? [] : Object.create(Object.getPrototypeOf(obj))
+    const queue = [[rst, obj]]
+
+    let i = 0
+    while (i < queue.length) {
+        const [newobj, oldobj] = queue[i++]
+        const entries = Array.isArray(oldobj) ? oldobj.map((v, k) => [k, v]) : Object.entries(oldobj)
+        entries.reduce(reduceCb, newobj)
+    }
+    return rst
+}
+
+```
+
+## 函数克隆
+
+1. `fn.bind(this)`，使用 bind 复制的新函数无法再次绑定或者更改 this（包括 bind、call、apply）
+2. `Function('return '+fn.toString())()`，重新创建一个新的函数，可以再次绑定和更改 this
+
+> 函数在 JS 中类似于原始类型的值一样，只能改变指向函数的引用，函数就像数字 123 一样，无法改变。所以函数克隆是没有意义的，只是让这两个函数不等而已
+
+ 
 
 # String.prototype.indexOf
 
@@ -388,3 +448,77 @@ const parseQueryStr = (url) =>{
  }
 ```
 
+# URL 查询串分割
+
+```typescript
+const splitQuery = (url='')=>{
+    const query = url.split('?')[1]
+    if (!query) return
+    return query.split('&').reduce((r,c)=>{
+        const [k,v] =  c.split('=')
+        r[k]= decodeURI(v)
+        return r 
+    },{})
+}
+```
+
+```typescript
+const splitQuery = (url='')=>{
+	const query = url.split('?')[1]
+    if (!query) return
+	const obj={}
+    query.replace(/([^&=]+)=([^&]+)/g, (_,k,v)=>obj[k]=decodeURI(v))
+    return obj
+}
+```
+
+# 深度优先遍历
+
+```typescript
+// recursion
+function deepTraversal(node) {
+    const nodes = []
+    if (node !== null) {
+        nodes.push(node.value)
+        for (const child of node.children) {
+            nodes.push(...deepTraversal(child))
+        }
+    }
+    return nodes
+}
+```
+
+```typescript
+// stack
+function deepTraversal(node) {
+    if (!node) return
+    const stack = [node]
+    const nodes = []
+    while (stack.length) {
+        node = stack.pop()
+        nodes.push(node.value)
+        stack.push(...node.children)
+    }
+    return nodes
+}
+```
+
+# 广度优先遍历
+
+```typescript
+// queue
+function wildTraversal(node){
+    const queue = [node]
+    const nodes = []
+    while(queue.length){
+        node = queue.shift()
+        nodes.push(node.value)
+        queue.push(...node.children)
+    }
+    return  nodes
+}	
+```
+
+
+
+ 

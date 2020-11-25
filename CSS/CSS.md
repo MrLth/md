@@ -384,3 +384,9 @@ input:-webkit-autofill{
 
 1. max-width/min-width 会覆盖 width，即使 width 是行内样式或者 !important
 2. min-width 会覆盖 max-width，此规则发生在两者冲突时
+
+# 常见隐藏元素的方式
+
+1. display:none 渲染树不会包含该渲染对象和其下的子元素，在页面中不占据位置，不响应绑定的监听事件
+2. visibility:hidden 元素不可视，在页面中仍然占据位置，但不响应绑定的监听事件
+3. opacity:0 元素不可视，在页面中仍然占据位置，响应绑定的监听事件
