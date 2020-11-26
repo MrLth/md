@@ -521,4 +521,13 @@ function wildTraversal(node){
 
 
 
- 
+ # myNew()
+
+```typescript
+function myNew(fn, ...rest){
+    const obj = Object.create(fn.prototype)
+    let rst = fn.apply(obj, rest)
+    return  rst === null || typeof rst !== 'object' ? obj : rst
+}
+```
+
