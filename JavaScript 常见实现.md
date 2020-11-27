@@ -531,3 +531,36 @@ function myNew(fn, ...rest){
 }
 ```
 
+# compose
+
+```typescript
+// a(b(c(1))) => compose(a, b, c)(1)
+function compose(...func){
+    if (func.length === 0)
+        return (...arg) => arg
+    if (func.length === 1)
+        return func[0]
+    
+    // 纯函数要求不能更改参数，func 是一个由参数组成的数组，也不算传统意义上的参数
+    // const last = func.pop()
+    const last = func[length - 1]
+    const rest = func.slice(0, -1)
+    return (...arg) => rest.reduceRight( (composed, fn)=> fn(composed) , last(...arg))
+}
+```
+
+# composeAsync:Redux
+
+```typescript
+async function composeAsync (...func){
+    if (func.length === 0)
+        return arg => arg
+    if (func.length === 1)
+        return func[0]
+    
+    return func.reduce( (a, c) => (...args) => a(b(...args)) )
+}
+
+// 
+```
+
