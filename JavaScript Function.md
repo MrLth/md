@@ -145,6 +145,25 @@ obj.fn() // obj
 
 
 
+# IIFE
 
+​	Imdiately Invoked Function Expression  立即执行函数表达式
 
- 
+```typescript
+(function b() {
+    console.log(b, b.name)
+    b = 123
+    console.log(b, b.name)
+})()
+console.log(b)
+
+// Function b(){...} 'b'
+// Function b(){...} 'b'
+// Throw Error
+```
+
+1. 函数表达式与函数声明不同，函数名只在该函数内部有效，并且此绑定是常量绑定。
+
+2. 对于一个常量进行赋值，在 strict 模式下会报错，非 strict 模式下静默失败。
+
+3. IIFE中的函数是函数表达式，而不是函数声明。所以 IIFE 执行后不会留下什么，给 IIFE 中的函数加上函数名没有任何意义。
