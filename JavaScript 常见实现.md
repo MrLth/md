@@ -549,10 +549,11 @@ function compose(...func){
 }
 ```
 
-# composeAsync:Redux
+# compose:Redux
 
 ```typescript
-async function composeAsync (...func){
+// 同步洋葱模型
+async function compose (...func){
     if (func.length === 0)
         return arg => arg
     if (func.length === 1)
@@ -560,7 +561,33 @@ async function composeAsync (...func){
     
     return func.reduce( (a, c) => (...args) => a(b(...args)) )
 }
+```
 
-// 
+# flatten 迭代
+
+```typescript
+function flatten(arr) {
+    while (arr.some(item => Array.isArray(item))) {
+        arr = [].concat(...arr)
+    }
+    return arr
+}
+```
+
+```typescript
+const flatten = (arr) => {
+    const newArr = []
+    const flat = (arr) => {
+        for (const v of arr) {
+            if (Array.isArray(v)) {
+                flat(v)
+            } else {
+                newArr.push(v)
+            }
+        }
+    }
+    flat(arr)
+    return newArr
+}
 ```
 
