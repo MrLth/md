@@ -321,15 +321,15 @@ const indexOf = (a,b)=>{
 ```
 
 ```typescript
-const indexOf = (a,b) => {
-	const rst = a.match(b) // regExp
-    return rst ? rst.index : -1
+String.prototype.myIndexOf = (pattern, startIndex)=>{
+    const rst = this.slice(startIndex).split(pattern)
+    return rst.length > 1 ? rst[0].length + startIndex : -1
 }
-```
-
-```typescript
-const indexOf = (a,b)=>{
-	return a.search(b)  // regExp
+Array.prototype.myIndexOf = (pattern, startIndex)=>{
+    for(let i=startIndex, len=this.length;i<len;i++){
+		if (pattern === this[i]) return i
+    }
+    return -1
 }
 ```
 
@@ -529,5 +529,71 @@ function myNew(fn, ...rest){
     let rst = fn.apply(obj, rest)
     return  rst === null || typeof rst !== 'object' ? obj : rst
 }
+```
+
+# compose
+
+```typescript
+// a(b(c(1))) => compose(a, b, c)(1)
+function compose(...func){
+    if (func.length === 0)
+        return (...arg) => arg
+    if (func.length === 1)
+        return func[0]
+    
+    // 纯函数要求不能更改参数，func 是一个由参数组成的数组，也不算传统意义上的参数
+    // const last = func.pop()
+    const last = func[length - 1]
+    const rest = func.slice(0, -1)
+    return (...arg) => rest.reduceRight( (composed, fn)=> fn(composed) , last(...arg))
+}
+```
+
+# compose:Redux
+
+```typescript
+// 同步洋葱模型
+async function compose (...func){
+    if (func.length === 0)
+        return arg => arg
+    if (func.length === 1)
+        return func[0]
+    
+    return func.reduce( (a, c) => (...args) => a(b(...args)) )
+}
+```
+
+# flatten 迭代版实现
+
+```typescript
+function flatten(arr) {
+    while (arr.some(item => Array.isArray(item))) {
+        arr = [].concat(...arr)
+    }
+    return arr
+}
+```
+
+```typescript
+const flatten = (arr) => {
+    const newArr = []
+    const flat = (arr) => {
+        for (const v of arr) {
+            if (Array.isArray(v)) {
+                flat(v)
+            } else {
+                newArr.push(v)
+            }
+        }
+    }
+    flat(arr)
+    return newArr
+}
+```
+
+# 数组交集
+
+```typescript
+const intersection = (a, b) => a.filter(v => b.includes(v))
 ```
 
