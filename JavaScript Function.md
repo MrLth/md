@@ -9,6 +9,11 @@ function foo(){
 
 ## 2. => 箭头函数
 
+- 箭头函数没有 this，函数体中的 this 为外部上下文的 this
+- 箭头函数也没有 prototype 属性，所以无法使用 new （无法作为构造函数）
+- 不可以使用 arguments 对象
+- 不可以使用 yield 关键字，因此也不能作为 generator 函数
+
 ```typescript
 const foo = () => {}
 ```
@@ -163,7 +168,28 @@ console.log(b)
 ```
 
 1. 函数表达式与函数声明不同，函数名只在该函数内部有效，并且此绑定是常量绑定。
-
 2. 对于一个常量进行赋值，在 strict 模式下会报错，非 strict 模式下静默失败。
-
 3. IIFE中的函数是函数表达式，而不是函数声明。所以 IIFE 执行后不会留下什么，给 IIFE 中的函数加上函数名没有任何意义。
+
+# 有条件地创建函数
+
+​	函数可以被有条件地声明，但不同浏览器会有不同的效果，对于大部分浏览器有条件地创建函数同样存在声明提升，但是不会赋值（类似于 var 的声明提升）。
+
+​	**任何情况都不应使用这种方式，甚至不使用 function 声明函数，改用箭头函数或者函数表达式，使之更符合直觉**
+
+> 只有 safari 还会在声明提升时赋值
+
+```typescript
+function a() {
+    debugger
+    console.log(b)
+    if (true) {
+        function b() {
+            console.log('b')
+        }
+    }
+    console.log(b)
+}
+a()
+```
+

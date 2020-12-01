@@ -321,15 +321,15 @@ const indexOf = (a,b)=>{
 ```
 
 ```typescript
-const indexOf = (a,b) => {
-	const rst = a.match(b) // regExp
-    return rst ? rst.index : -1
+String.prototype.myIndexOf = (pattern, startIndex)=>{
+    const rst = this.slice(startIndex).split(pattern)
+    return rst.length > 1 ? rst[0].length + startIndex : -1
 }
-```
-
-```typescript
-const indexOf = (a,b)=>{
-	return a.search(b)  // regExp
+Array.prototype.myIndexOf = (pattern, startIndex)=>{
+    for(let i=startIndex, len=this.length;i<len;i++){
+		if (pattern === this[i]) return i
+    }
+    return -1
 }
 ```
 
@@ -563,7 +563,7 @@ async function compose (...func){
 }
 ```
 
-# flatten 迭代
+# flatten 迭代版实现
 
 ```typescript
 function flatten(arr) {
@@ -589,5 +589,11 @@ const flatten = (arr) => {
     flat(arr)
     return newArr
 }
+```
+
+# 数组交集
+
+```typescript
+const intersection = (a, b) => a.filter(v => b.includes(v))
 ```
 
