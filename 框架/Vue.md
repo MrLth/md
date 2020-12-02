@@ -8,3 +8,32 @@
 
 ​	**开发环境**时， **`初始化组件实例 => 初始化 state => 初始化 props`** 的时候，给这个 props 添加 reactive 特性（ setter、getter ），set 修改此属性时会进行判断
 
+# ２ 生命周期
+
+**单个组件**
+
+​	beforeCreate => created => beforeMount => mounted
+
+​	beforeUpdate => updated
+
+​	beboreUnmount => unmouted
+
+**父组件和子组件的生命周期 HOOK 执行顺序**
+
+****
+
+1. 父：beforeCreate => created => beforeMount 
+2. 子：beforeCreate => created => beforeMount => mounted
+3. 父：mounted
+
+****
+
+1. 父：beforeUpdate 
+2. 子：beforeUpdate => updated\
+3. 父：updated
+
+****
+
+1. 父：beboreUnmount
+2. 子：beboreUnmount => unmouted
+3. 父：unmouted

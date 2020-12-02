@@ -597,3 +597,87 @@ const flatten = (arr) => {
 const intersection = (a, b) => a.filter(v => b.includes(v))
 ```
 
+```typescript
+const intersection = (a,b) => Array.from(new Set([...a, ...b]))
+```
+
+# 移动 0 至数组尾部
+
+```typescript
+const sortZero = (arr) => {
+    const len = arr.length
+    let i = 0, j = 0
+
+    outer: while (i < len && j < len) {
+        if (arr[i] === 0) {
+            do {
+                j++
+                if (j === len) break outer
+            } while (arr[j] === 0);
+
+            arr[i] = arr[j]
+            arr[j] = 0
+        }
+        i++
+        j++
+    }
+    return arr
+}
+```
+
+```typescript
+const tailZero = (arr) => {
+    const len = arr.length
+    let j = 0
+    for (let i = 0; i < len - j; i++) {
+        if (arr[i] === 0) {
+            arr.splice(i, 1)
+            arr.push(0)
+            i--
+            j++
+        }
+    }
+    return arr
+}
+```
+
+# 柯里化
+
+```typescript
+const curring = (cb, len) => {
+    const length = len ?? cb.length
+    const argus = []
+    const fn = (...rest) => {
+        argus.push(...rest)
+        if (argus.length < length){
+            return fn
+        }else{
+            const newArgus = [...argus]
+            argus.length = 0
+            return cb.call(this, ...newArgus)
+        }
+    }
+    return fn
+}
+const f = curring((a,b,c)=>a+b+c)
+// 支持情况
+f(1)(2)(3) // 6
+f(1)(2)
+f(3)	// 6
+f(1,2)(3) // 6
+```
+
+```typescript
+const curring = (cb)=>
+	fn = (...argus) =>
+		rest.length >= cb.length 
+			? cb.call(this, ...argus)
+			：(...rest) => fn(...argus, ...rest)
+// 不支持
+f(1)(2)
+f(3)	// 6
+// 支持
+f(1)(2)(3) // 6
+f(1,2)(3) // 6
+```
+
