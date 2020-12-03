@@ -221,6 +221,8 @@ Array.prototype.distnct = function (){
 
 # 深克隆
 
+​	除了手动复制，还可以利用 HTML5 标签定义的[结构化克隆算法](https://developer.mozilla.org/zh-CN/docs/Web/Guide/API/DOM/The_structured_clone_algorithm)，但浏览器并没提供通用的接口供我们使用，大多需要利用使用了这一特性的方法，就像 generator
+
 ```typescript
 const type = obj =>
     typeof obj !== 'object'
@@ -296,6 +298,31 @@ const cloneDeep = (obj) => {
 }
 
 ```
+
+```typescript
+// 深度优先 && 包含 symbol && 优化相互引用
+const deepClone = (obj, cache = new Map()) => {
+    if (obj !== null && typeof obj === 'object') {
+        if (cache.has(obj)) {
+            return cache.get(obj)
+        }
+        let clone
+        if (Array.isArray(obj)) {
+            clone = obj.map(v => deepClone(v, cache))
+        } else {
+            clone = [...Object.keys(obj), ...Object.getOwnPropertySymbols(obj)].reduce((a, c) => {
+                a[c] = deepClone(obj[c], cache)
+                return a
+            }, Object.create(Object.getPrototypeOf(obj)))
+        }
+        cache.set(obj, clone)
+        return clone
+    }
+    return obj
+}
+```
+
+
 
 ## 函数克隆
 
