@@ -386,3 +386,12 @@ console.log(o + "")
 // hello
 ```
 
+# Reference 
+
+​	引用类型并非 JavaScript 的基本类型，但是确实存在运行时的一种类型，如成员访问 a.b 返回的就是一个引用，一个 Reference 分为两部分：
+
+- Object
+- Key
+
+常见用到 Reference 的地方就是 delete 运算符和赋值运算 assgin 了，基本只有这两种情况是操作 Reference ，其它情况如加减乘除则是将其当作具体的值使用
+
