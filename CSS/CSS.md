@@ -390,3 +390,49 @@ input:-webkit-autofill{
 1. display:none 渲染树不会包含该渲染对象和其下的子元素，在页面中不占据位置，不响应绑定的监听事件
 2. visibility:hidden 元素不可视，在页面中仍然占据位置，但不响应绑定的监听事件
 3. opacity:0 元素不可视，在页面中仍然占据位置，响应绑定的监听事件
+
+# 12. css reset 与 normalize.css 的区别
+
+​	两者都是为了使各个浏览器渲染页面效果一致
+
+**css reset**
+
+​	将所有浏览器标签的自带样式重置，这样更易于保持各浏览器渲染的一致性
+
+**normalize.css**
+
+​	尽量保留浏览器的默认样式，不进行太多的重置，尽力让这些样式保持一致并尽可能与现代标准相符合
+
+```scss
+// css reset 部分
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {  
+   margin: 0;  
+   padding: 0;  
+   border: 0;  
+   font-size: 100%;  
+   font: inherit;  
+   vertical-align: baseline; 
+}
+
+// normalize.css 部分
+/**
+ * 1. Addresses appearance set to searchfield in S5, Chrome
+ * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)
+ */
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Removes inner padding and search cancel button in S5, Chrome on OS X
+ */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+```
+
+#     
