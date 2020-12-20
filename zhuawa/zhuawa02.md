@@ -64,3 +64,14 @@ target.dispatch(evt)
 
 1. pointer-events:none 不会在事件传递过程中被访问，常见就是遮罩透传
 2. touch-action 移动端，和 pointer-events:none 类似
+
+# XHR
+
+1. xhr.abort()
+2. xhr.timout = 1000
+   xhr.ontimeout = function(){}
+
+# 跨域
+
+
+
